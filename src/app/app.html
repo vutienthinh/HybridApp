@@ -1,0 +1,73 @@
+<ion-menu [content]="content" (ionOpen)="menuOpened()" (ionClose)="menuClosed()">
+  <ion-header>
+    <ion-toolbar>
+      <!-- <img src="assets/img/logo-white.png" alt="" height="24"> -->
+      <div class="toolbar-image"><img src="assets/icon/ic_wap_light.png" alt="" class="icon-img-parent" height="30"></div>
+      <div class="toolbar-images">
+        <p class="text-menu-header">{{user.full_name}}</p>
+        <p class="text-menu-header">{{user.job_title}}</p>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <button ion-item (click)="openPage(inboundPages)" [hidden]="!haveAtLeastOnePer(inboundPages.submenu)">
+        <ion-icon name="{{inboundPages.icon}}" item-left></ion-icon>
+        <!-- <img src="{{inboundPages.icon}}" alt="" class="icon-img-parent" height="24"> -->
+        <ion-icon class="icon-menu" name="ios-arrow-down" item-right [hidden]="showSubmenuInBound"></ion-icon>
+        <ion-icon class="icon-menu" name="ios-arrow-up" item-right [hidden]="!showSubmenuInBound"></ion-icon>
+        <span class="text-menu">{{inboundPages.title}}</span>
+      </button>
+      <button ion-item *ngFor="let p of inboundPages.submenu" class="submenu" (click)="openPage(p)" [hidden]="!showSubmenuInBound || !permission[p.permission]">
+        <ion-icon name="{{p.icon}}" class="icon-sub" item-left></ion-icon>
+        <!-- {{p.title}} -->
+        <!-- <img src="{{p.icon}}" alt="" class="icon-img-sub" height="24"> -->
+          <span class="text-menu-sub">{{p.title}}</span>
+      </button>
+       <button ion-item (click)="openPage(outboundPages)" [hidden]="!haveAtLeastOnePer(outboundPages.submenu)">
+        <ion-icon name="{{outboundPages.icon}}" item-left></ion-icon>
+        <!-- <img src="{{outboundPages.icon}}" alt="" class="icon-img-parent" height="24"> -->
+        <ion-icon class="icon-menu" name="ios-arrow-down" item-right [hidden]="showSubmenuOutBound"></ion-icon>
+        <ion-icon class="icon-menu" name="ios-arrow-up" item-right [hidden]="!showSubmenuOutBound"></ion-icon>
+          <span class="text-menu">{{outboundPages.title}}</span>
+      </button>
+      <button ion-item *ngFor="let p of outboundPages.submenu" class="submenu" (click)="openPage(p)" [hidden]="!showSubmenuOutBound || !permission[p.permission]">
+        <ion-icon name="{{p.icon}}" class="icon-sub" item-left></ion-icon>
+        <!-- {{p.title}} -->
+        <!-- <img src="{{p.icon}}" alt="" class="icon-img-sub" height="24"> -->
+          <span class="text-menu-sub">{{p.title}}</span>
+      </button>
+      <button ion-item (click)="openPage(toolPages)" [hidden]="!haveAtLeastOnePer(toolPages.submenu)">
+        <ion-icon name="{{toolPages.icon}}" item-left></ion-icon>
+        <!-- <img src="{{toolPages.icon}}" alt="" class="icon-img-parent" height="24"> -->
+        <ion-icon class="icon-menu" name="ios-arrow-down" item-right [hidden]="showSubmenuTool"></ion-icon>
+        <ion-icon class="icon-menu" name="ios-arrow-up" item-right [hidden]="!showSubmenuTool"></ion-icon>
+        <span class="text-menu">{{toolPages.title}}</span>
+      </button>
+      <!-- <button ion-item *ngFor="let t of toolPages.submenu" class="submenu" (click)="openPage(t)" [hidden]="!showSubmenuTool || !permission[t.permission]"> -->
+      <button ion-item *ngFor="let t of toolPages.submenu" class="submenu" [hidden]="!showSubmenuTool || !permission[t.permission]">
+        <ion-icon name="{{t.icon}}" class="icon-sub" item-left></ion-icon>
+        <!-- {{p.title}} -->
+        <!-- <img src="{{p.icon}}" alt="" class="icon-img-sub" height="24"> -->
+          <span class="text-menu-sub">{{t.title}}</span>
+      </button>
+      <div class="other-menu">
+        <button ion-item *ngFor="let p of otherPages" (click)="openPage(p)">
+          <ion-icon name="{{p.icon}}" item-left></ion-icon>
+          <!-- {{p.title}} -->
+          <!-- <img src="{{p.icon}}" alt="" class="icon-img-sub" height="24"> -->
+            <span class="text-menu-sub">{{p.title}}</span>
+        </button>
+      </div>
+      <!-- <button menuClose ion-item routerLink="/login">
+        <ion-icon name="md-log-out" item-left></ion-icon>
+        Logout
+      </button> -->
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

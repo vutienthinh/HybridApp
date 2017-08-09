@@ -1,0 +1,40 @@
+page-sku-assignment {
+	.detail-title {
+        margin: 26px 30px;
+        font-size: 15px;
+    }
+    .icon-wrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        .icon {
+            font-size: 32px;
+            margin: 0 6px;
+            /* &:first-of-type {
+                color: $mainred;
+            }
+            &:last-of-type {
+                color: $mainblue;
+            } */
+        }
+    }
+    .btn-complete-wrapper {
+        text-align: right;
+        padding: 12px;
+    }
+    .table-striped {
+    	
+    }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 321px) {
+    .table-striped td,th {
+        padding: .6rem .3rem !important;
+    }
+}
+@media only screen and (max-width : 320px) {
+    .table-striped td,th {
+        padding: .6rem .0rem !important;
+    }
+}

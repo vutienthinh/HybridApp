@@ -1,0 +1,40 @@
+page-carton-picking {
+	.table-striped {
+		.table-content {
+			.btn-block {
+				text-align: left;
+				button {
+					min-width: 110px;
+				}
+			}
+		}
+		.pick-wrapper {
+            display: table;
+            div {
+                width: 28px;
+                height: 28px;
+	            img {
+	            	max-height: 100%;
+	            	max-width: 100%;
+	            }
+            }
+            span {
+                display: table-cell;
+                vertical-align: middle;
+                padding-left: 10px;
+                color: #2A2A2A;
+            }
+        }
+	}
+	.scan-btn {
+		margin-bottom: 14px;
+	}
+	.btn-list-container {
+		display: flex;
+    	flex-direction: row;
+    	justify-content: flex-end;
+		button {
+			min-width: 154px;
+		}
+	}
+}

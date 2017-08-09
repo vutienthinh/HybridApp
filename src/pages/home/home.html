@@ -1,0 +1,165 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>ASN Lockup</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+            <ion-list class="search-block">
+                <ion-item>
+                    <ion-searchbar type="text" placeholder="Customer Name" debounce="0" [(ngModel)]="customerName" (ionInput)="getCusNames($event)" (ionCancel)="onCancelCusName($event)"></ion-searchbar>
+                    <ion-list [hidden]="!showCusSuggestion" class="dropdown-list customer" id="dropdownCustomer">
+                      <ion-item *ngFor="let cus of cusNames" (click)="chooseCusName(cus)">
+                        {{ cus.cus_name }}
+                      </ion-item>
+                    </ion-list>
+                </ion-item>
+            </ion-list>
+        </ion-col>
+        <ion-col>
+            <ion-list class="search-block">
+                <ion-item>
+                    <ion-searchbar type="text" placeholder="Container #" debounce="0" [(ngModel)]="containerNum" (ionInput)="getCntrNums($event)" (ionCancel)="onCancelCntrNum($event)"></ion-searchbar>
+                    <ion-list [hidden]="!showConSuggestion" class="dropdown-list container" id="dropdownContainer">
+                        <ion-item *ngFor="let ctnr of ctnrNums" (click)="chooseCntrNum(ctnr)">
+                            {{ ctnr.ctnr_num }}
+                        </ion-item>
+                    </ion-list>
+                </ion-item>
+            </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row class="top-btn-wrapper">
+            <button ion-button item-right small (click)="getAsns()">
+                Get Asn
+            </button>
+            <!-- <button ion-button item-right small (click)="getAsns()" [disabled]="!ctnrNumsBackUp || !cusNamesBackUp">
+                Get Asn
+            </button> -->
+        </ion-row>
+    </ion-grid>
+
+     <!--  <ion-item>
+          <ion-input placeholder="Customer Name" type="text" [(ngModel)]="customerId"></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-input placeholder="Container #" type="text" [(ngModel)]="containerNum"></ion-input>
+          <button ion-button item-right small (click)="getAsns()">
+                 Get Asn
+          </button>
+      </ion-item> -->
+  <div class="selection-container">
+      <ion-grid>
+            <ion-row class="title-wrapper">
+                <ion-col width-67>
+                    <label>Receiving At</label>
+                </ion-col>
+                <ion-col>
+                    <label>Assign To</label>
+                </ion-col>
+            </ion-row>
+          <ion-row>
+                <ion-col width-33>
+                    <ion-item>
+                        <ion-label></ion-label>
+                        <ion-select interface="action-sheet" [(ngModel)]="rfidReader1" (ionChange)="handleChangeSelect($event, rfidReader1, listRFIDReader2, true)">
+                            <!-- ion-option value="gate1" selected="true">Gate 1</ion-option> -->
+                            <ion-option *ngFor="let reader of listRFIDReader1" value="{{reader.device_id}}">{{reader.name}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-4>
+                    <ion-item>
+                        <ion-label></ion-label>
+                        <ion-select interface="action-sheet" [(ngModel)]="rfidReader2" (ionChange)="handleChangeSelect($event, rfidReader2, listRFIDReader1, false)">
+                            <!-- ion-option value="gate1" selected="true">Gate 1</ion-option> -->
+                            <ion-option *ngFor="let reader of listRFIDReader2" value="{{reader.device_id}}">{{reader.name}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-4>
+                    <ion-item>
+                        <ion-label></ion-label>
+                        <ion-select interface="action-sheet" [(ngModel)]="assignTo" (ionChange)="checkCheckerAssign(assignTo);">
+                            <!-- ion-option value="gate1" selected="true">Gate 1</ion-option> -->
+                            <ion-option *ngFor="let chkr of listChecker" value="{{chkr.user_id}}">{{chkr.full_name}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+          </ion-row>
+        </ion-grid>
+    </div>
+  <table class="table-striped root-table" id="table-asn" [hidden]="!listAsns || listAsns.length <= 0">
+            <thead>
+                <tr>
+                    <th>ASN#</th>
+                    <th>Customer</th>
+                    <th>Container#</th>
+                    <th>SKUs</th>
+                    <th>Expected Date</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let asn of listAsns; let i = index;">
+                <tr (click)="toggleDisplay(asn)" id="row-{{i}}">
+                    <th scope="row">{{asn.asn_hdr_num}}</th>
+                    <td>{{asn.cus_name}}</td>
+                    <td>{{asn.ctnr_num}}</td>
+                    <td>{{asn['total-sku']}}</td>
+                    <td>{{asn.asn_hdr_ept_dt}}</td>
+                    <td class="sts-name" [ngClass]="{'new' : asn.asn_sts == 'NW', 'receiving' : asn.asn_sts == 'RV'}">{{asn.asn_sts_name}}</td>
+                    <td class="icon-wrapper">
+                        <ion-icon name="ios-arrow-down" [hidden]="asn.inJectTableShow"></ion-icon>
+                        <ion-icon name="ios-arrow-up" [hidden]="!asn.inJectTableShow"></ion-icon>
+                    </td>
+                </tr>
+                <tr class="table-container" [hidden]="!asn.inJectTableShow">
+                    <td COLSPAN=7 class="table-content">
+                        <table class="table-striped inject-table">
+                            <thead>
+                                <tr>
+                                    <th>Item ID</th>
+                                    <th>SKU</th>
+                                    <th>Size</th>
+                                    <th>Color</th>
+                                    <th>LOT</th>
+                                    <th>Expcd Cartons</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let detail of asn.items" (click)="gotoSkuVerification(asn, detail)" [ngClass]="{'selected' : detail.isSelected}">
+                                <tr>
+                                    <td>{{detail.item_id}}</td>
+                                    <td>{{detail.sku}}</td>
+                                    <td>{{detail.size}}</td>
+                                    <td>{{detail.color}}</td>
+                                    <td>{{detail.asn_dtl_lot}}</td>
+                                    <td>{{detail.act_carton}}</td>
+                                    <td class="sts-name" [ngClass]="{'new' : detail.asn_dtl_sts == 'NW', 'receiving' : detail.asn_dtl_sts == 'RV'}">{{detail.asn_sts_name}}</td>
+                                    <td class="btn-wrapper">
+                                        <button  ion-button small [hidden]="detail.asn_dtl_sts == 'NW' || detail.asn_dtl_sts == 'RD'" (click)="completeSkuOfAsn(asn, detail); $event.stopPropagation();" class="limit-width complete-btn">
+                                            Complete
+                                        </button>
+                                        <button  ion-button color="secondary" [hidden]="detail.asn_dtl_sts == 'RD'" item-right small class="limit-width receive-btn">
+                                            Receive
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+    </table>
+    <ion-infinite-scroll *ngIf="pagingData.totalPage >= pagingData.currentPage" (ionInfinite)="doInfinite($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

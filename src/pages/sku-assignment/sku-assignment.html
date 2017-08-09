@@ -1,0 +1,74 @@
+<!--
+  Generated template for the SkuAssignment page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <ion-title>Sku Assignment</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+	<ion-grid>
+	    <ion-row>
+	        <ion-col width-50>
+	            <ion-row>
+	                <ion-col width-50>ASN Number:</ion-col>
+	                <ion-col width-50>{{asn_num}}</ion-col>
+	            </ion-row>
+	            <ion-row>
+	                <ion-col width-50>Customer:</ion-col>
+	                <ion-col width-50>{{cus_name}}</ion-col>
+	            </ion-row>
+	            <ion-row>
+	                <ion-col width-50>Container:</ion-col>
+	                <ion-col width-50>{{ctnr_num}}</ion-col>
+	        	</ion-row>
+	        </ion-col>
+	        <ion-col width-50 class="btn-complete-wrapper">
+	            <div>
+	                <button ion-button [disabled]="!isAllComplete()">
+	                    Complete Container
+	                </button>
+	            </div>
+	        </ion-col>
+	   	</ion-row>
+	</ion-grid>
+    <table class="table-striped"> 
+        <thead>
+            <tr>
+                <th>Item ID</th>
+                <th>SKU</th>
+                <th>Size</th>
+                <th>Color</th>
+                <th>Expcd Cartons</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let asn of currentAsn">
+                <td scope="row">{{asn.dtl_item_id}}</td>
+                <td scope="row">{{asn.dtl_sku}}</td>
+                <td>{{asn.dtl_size}}</td>
+                <td>{{asn.dtl_color}}</td>
+                <td>{{asn.dtl_ctn_ttl}} / {{asn.scan_vir_ctn_ttl}}</td>
+                <td ng-switch on="asn.asn_dtl_status">
+                    <span ng-switch-default>New</span>
+                    <!-- <span ng-switch-when="">New</span>
+                    <span ng-switch-when="RE">Received</span>
+                    <span ng-switch-when="RG">Receiving</span> -->
+                </td>
+                <td class="btn-wrapper">
+                    <button  ion-button small color="secondary" (click)="completeSkuOfAsn(asn.asn_dtl_id); $event.stopPropagation();">
+                        Complete
+                    </button>
+                    <button  ion-button item-right small>
+                        Receive
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</ion-content>

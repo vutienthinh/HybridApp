@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title><strong>Order List</strong></ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <table class="table-striped root-table" id="table-asn" [hidden]="!listOrder || listOrder.length <= 0">
+    <thead>
+      <tr>
+        <th class="text-left">Order Num</th>
+        <th class="text-left">Status</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let order of listOrder; let i = index;">
+      <tr (click)="toggleDisplay(order)" id="row-{{i}}">
+        <td class="text-left">{{order.odr_num}}</td>
+        <td class="sts-name text-left" [ngClass]="{'new' : order.odr_sts == 'NW', 'receiving' : order.odr_sts == 'PK'}">{{order.odr_sts_name}}</td>
+        <td class="text-left"><ion-icon class="balanced font-25" name="md-arrow-dropright-circle" (click)="assignCartonsToOrder(order.odr_id); $event.stopPropagation();"></ion-icon><td>
+        <td class="icon-wrapper text-left">
+          <ion-icon name="ios-arrow-down" [hidden]="order.inJectTableShow"></ion-icon>
+          <ion-icon name="ios-arrow-up" [hidden]="!order.inJectTableShow"></ion-icon>
+        </td>
+      </tr>
+      <tr class="table-container" [hidden]="!order.inJectTableShow">
+        <td COLSPAN=7 class="table-content">
+          <table class="table-striped inject-table">
+            <thead>
+              <tr>
+                <th class="text-left">SKU</th>
+                <th class="text-left">Cartons</th>
+                <th class="text-left">Status</th>
+                <!-- <th></th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let detail of order.items">
+                <td class="text-left">{{detail.sku}}</td>
+                <td class="text-left">{{detail.alloc_carton}}</td>
+                <td class="sts-name text-left" [ngClass]="{'new' : detail.itm_sts == 'NW', 'receiving' : detail.itm_sts == 'PK', 'received' : detail.itm_sts == 'PD'}">{{detail.itm_sts_name}}</td>
+                <!-- <td class="btn-wrapper">
+                  <button ion-button small [hidden]="detail.itm_sts == 'NW'" (click)="assignCartonsToOrder(detail.ord_dtl_id); $event.stopPropagation();">
+                                            Process
+                                        </button>
+                  <button ion-button small color="secondary" [hidden]="detail.itm_sts == 'PN'" (click)="assignCartonsToOrder(detail.ord_dtl_id); $event.stopPropagation();">
+                                            Continue
+                                        </button>
+                </td> -->
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ion-infinite-scroll *ngIf="pagingData.totalPage >= pagingData.currentPage" (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

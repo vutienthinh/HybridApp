@@ -1,0 +1,42 @@
+page-assign-cartons-order {
+  .pick-wrapper {
+    display: table;
+
+    div {
+      width: 28px;
+      height: 28px;
+
+      img {
+        max-height: 100%;
+        max-width: 100%;
+      }
+    }
+
+    span {
+      display: table-cell;
+      vertical-align: middle;
+      padding-left: 10px;
+      color: #2A2A2A;
+    }
+  }
+
+  .width-50 {
+    width: 50px;
+  }
+
+  .disabled {
+    color: #d2caca !important;
+  }
+  .text-left {
+     text-align: left;
+  }
+  .piece-number {
+    border: 1px solid #ddd;
+  }
+  thead tr th {
+    font-weight:700 !important;
+  }
+  .label-grey {
+    color: #adadad;
+  }
+}

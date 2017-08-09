@@ -1,0 +1,171 @@
+page-sku-verification {
+  .sku-verify-content {
+    vertical-align: middle;
+    padding: 10px 0;
+
+    .header-row {
+      display: flex;
+      // justify-content: center;
+      // align-text: center;
+      vertical-align: middle;
+      align-items: center;
+      // margin-bottom: 12px;
+      .scan-block {
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        height: 60px;
+
+        button {
+          margin-left: 12px;
+        }
+      }
+    }
+
+    .first-row {
+      vertical-align: middle;
+      //display: flex;
+      justify-content: center;
+      align-items: center;
+      border-right: #ccc solid 1px;
+    }
+
+    .second-row {
+      .history-table {
+        margin: 0 16px;
+      }
+    }
+
+    .stop-message {
+      ion-col {
+        text-align: center;
+
+        h4 {
+          color: #2A00FF;
+        }
+      }
+    }
+  }
+
+  .sku-verify-content {
+    .item {
+      display: flex;
+      align-items: center;
+      background-color: #FFF;
+      margin: 0 16px;
+
+      & > ion-icon {
+        font-size: 3.4rem;
+      }
+    }
+  }
+
+  .sku-verify-content .header-row h4 {
+    margin-right: 10px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .sku-verify-content .sku-info {
+    margin-bottom: 12px;
+  }
+
+  .col-center {
+    .item {
+      &.red {
+        color: red;
+      }
+    }
+  }
+
+  .history-table {
+    tr {
+      border: none;
+
+      button {
+        float: left;
+      }
+    }
+
+    .rfid-number {
+      vertical-align: middle;
+
+      ion-icon {
+        font-size: 26px;
+        margin-right: 10px;
+
+        &.yellow {
+          color: #ffb52a;
+        }
+
+        &.red {
+          color: #CF2A28;
+        }
+
+        &.green {
+          color: #7ed321;
+        }
+      }
+    }
+  }
+}
+
+button.button_stop {
+  text-transform: uppercase;
+  float: right;
+  margin-top: -5px;
+}
+
+.button-icon {
+  float: right !important;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #ddd !important;
+}
+
+.border-top {
+  border-top: 1px solid #ddd !important;
+  position: absolute;
+  bottom: 0;
+}
+
+.scroll-rfid {
+  height: 290px;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  will-change: scroll-position;
+}
+
+.history-content {
+  height: 165px;
+  @extend .scroll-rfid;
+}
+@media only screen and (max-width : 580px) {
+  page-sku-verification {
+    .sku-verify-content {
+      .item {
+        margin: 0 4px;
+
+        & > ion-icon {
+          font-size: 3rem;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width:805px) {
+  .scroll-rfid {
+    height: 150px;
+    display: block;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    will-change: scroll-position;
+  }
+  .history-content {
+    height: 89px;
+  }
+}

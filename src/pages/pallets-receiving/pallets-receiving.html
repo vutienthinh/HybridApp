@@ -1,0 +1,55 @@
+<!--
+  Generated template for the PalletsReceiving page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+  	<button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Pallets At Receiving</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="pallet-receiving-page">
+	<div class="header-block"><!-- <h4>Receiving at: {{currentGate}}</h4> -->
+		<ion-item>
+            <ion-label>Receiving At</ion-label>
+            <ion-select interface="action-sheet" [(ngModel)]="receivingAt" (ionChange)="handleChangeSelect($event, receivingAt)">
+                <!-- ion-option value="gate1" selected="true">Gate 1</ion-option> -->
+                <ion-option *ngFor="let gate of listGate" value="{{gate.location_id}}">{{gate.name}}</ion-option>
+            </ion-select>
+        </ion-item>
+	</div>
+	<div class="pallet-content">
+            <!-- <div class="header-table">
+            	<ion-grid>
+	                <ion-row>
+	                    <ion-col width-25 *ngFor="let lo of listLocation | slice : 0 : 4">
+	                        <div class="miles-wrapper" (click)="setActive(lo)">
+	                            <img [hidden]="!lo.selected" src="assets/img/radio/radio_on.png">
+	                            <img [hidden]="lo.selected" src="assets/img/radio/radio_off.png">
+	                            <span>{{lo.name}}</span>
+	                        </div>
+	                    </ion-col>
+	                </ion-row>
+	            </ion-grid>
+            </div> -->
+            <!-- <ion-grid> -->
+	            <ion-row *ngFor="let num of [1,2,3,4,5,6,7,8,9,10] | slice : 0 : totalRow">
+	                <ion-col width-25 *ngFor="let pos of listPosition | slice : (num-1)*4 : num*4 ">
+	                    <div class="btn-block" (click)="updateStatus(pos)" [ngClass]="{'green' : pos.last_status == 'FL' ,'gray' : pos.last_status == 'ET' || pos.last_status == '','yellow' : pos.last_status == 'RS'}">
+	                        <p>{{pos.code}}</p>
+	                        <p>{{pos.sku_num}}</p>
+	                        <p>{{pos.display_status}}</p>
+	                    </div>
+	                </ion-col>
+	            </ion-row>
+	       <!--  </ion-grid> -->
+    </div>
+</ion-content>

@@ -1,0 +1,74 @@
+<!--
+  Generated template for the WarepickList page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Wave Pick List</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <table class="table-striped root-table" id="table-asn">
+        <thead>
+            <tr>
+                <th>Wave Num</th>
+                <th># of Orders</th>
+                <th>SKUs</th>
+                <th>Created Date</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let warepick of listWarePick; let i = index;">
+            <tr (click)="toggleDisplay(warepick)" id="row-{{i}}">
+                <th scope="row">{{warepick.wv_num}}</th>
+                <td>{{warepick.of_order}}</td>
+                <td>{{warepick.total_sku}}</td>
+
+                <td>{{warepick.created_at.date | date: 'dd-MMM-yyyy' }}</td>
+                <td class="sts-name" [ngClass]="{'new' : warepick.wv_sts == 'NW', 'receiving' : warepick.wv_sts == 'RV'}">{{warepick.wv_sts_name}}</td>
+                <td class="icon-wrapper">
+                    <ion-icon name="ios-arrow-down" [hidden]="warepick.inJectTableShow"></ion-icon>
+                    <ion-icon name="ios-arrow-up" [hidden]="!warepick.inJectTableShow"></ion-icon>
+                </td>
+            </tr>
+            <tr class="table-container" [hidden]="!warepick.inJectTableShow">
+                <td COLSPAN=7 class="table-content">
+                    <table class="table-striped inject-table">
+                        <thead>
+                            <tr>
+                                <th>Item ID</th>
+                                <th>SKU</th>
+                                <th>Size</th>
+                                <th>Color</th>
+                                <th>Allocated Cartons</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let sku of warepick.details.data" (click)="gotoSkuLocationPage(sku.wv_dtl_id, warepick.wv_id, sku.item_id);">
+                                <td>{{sku.item_id}}</td>
+                                <td>{{sku.sku}}</td>
+                                <td>{{sku.size}}</td>
+                                <td>{{sku.color}}</td>
+                                <td>{{sku.allocate_cartons}}</td>
+                                <td class="sts-name" [ngClass]="{'new' : sku.wv_dtl_sts == 'NW', 'receiving' : sku.wv_dtl_sts == 'RV'}">{{sku.wv_dtl_sts_name}}</td>
+                                <td class="btn-wrapper">
+                                    <button ion-button color="secondary" *ngIf="sku.wv_dtl_sts_name != 'Picked'" small class="limit-width pick-btn">
+                                        Pick
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</ion-content>

@@ -1,0 +1,81 @@
+page-login {
+    .login-form {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        .form-wrapper {
+            width: 74%;
+            margin-top: 4px;
+            button {
+                background-color: #56c0e0;
+                height: 52px;
+                margin-top: 56px;
+                font-size: 18px;
+            }
+            .input-wrapper {
+                ion-label[customName="user_name"]:before {
+                    content: url(../assets/icon/ic_user.png);
+                    margin-right: 20px;
+                }
+                ion-label[customName="password"]:before {
+                    content: url(../assets/icon/ic_password.png);
+                    margin-right: 20px;
+                }
+            }
+        }
+        .logo-wrapper {
+            /* min-height: 440px; */
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            /* display: table; */
+            text-align: center;
+            height: 40vh;
+            position: relative;
+            h4 {
+                /* display: table-cell;
+                    vertical-align: top; */
+                text-transform: uppercase;
+                color: #F0F0FF;
+                padding-top: 26px;
+                font-size: 30px;
+                font-weight: 700;
+                z-index: 100;
+            }
+        }
+        .logo-bg {
+            position: absolute;
+            top: -2px;
+            left: -4px;
+            right: -4px;
+            bottom: 0;
+            background: white;
+            background-size: cover;
+            background-position: top left;
+            /*  filter: blur(1px); */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+/* @media only screen and (min-width: 568px) {
+    page-login {
+        .login-form {
+            .form-wrapper {
+                width: 74%;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 567px) {
+    page-login {
+        .login-form {
+            .form-wrapper {
+                width: 100%;
+            }
+        }
+    }
+} */

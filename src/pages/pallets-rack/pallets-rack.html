@@ -1,0 +1,94 @@
+<!--
+  Generated template for the PalletsRack page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Pallets On Rack</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="pallet-putaway-page">
+  <ion-grid>
+    <ion-row class="sku-content">
+      <ion-col width-25>
+        <ion-row>
+          <ion-col><strong class="label-grey">Working on:</strong></ion-col>
+        </ion-row>
+        <ion-row *ngIf="sku">
+          <ion-col><strong class="label-grey">SKU:</strong></ion-col>
+        </ion-row>
+        <ion-row *ngIf="currentCustomer.cus_name">
+          <ion-col><strong class="label-grey">Customer: </strong></ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col width-65>
+        <ion-row>
+          <ion-col><strong>{{deviceName}}</strong></ion-col>
+        </ion-row>
+        <ion-row *ngIf="sku">
+          <ion-col><strong>{{sku}}</strong></ion-col>
+        </ion-row>
+        <ion-row *ngIf="currentCustomer.cus_name">
+          <ion-col><strong>{{currentCustomer.cus_name}}</strong></ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- <div><span class="text-right"><strong>Working on: {{deviceName}}</strong></span></div> -->
+  <div class="pallet-content">
+    <!-- <div class="header-table">
+            	<ion-grid>
+	                <ion-row>
+	                    <ion-col width-25 *ngFor="let lo of listLocation | slice : 0 : 4">
+	                        <div class="miles-wrapper" (click)="setActive(lo)">
+	                            <img [hidden]="!lo.selected" src="assets/img/radio/radio_on.png">
+	                            <img [hidden]="lo.selected" src="assets/img/radio/radio_off.png">
+	                            <span>{{lo.name}}</span>
+	                        </div>
+	                    </ion-col>
+	                </ion-row>
+	            </ion-grid>
+            </div> -->
+    <!-- <ion-grid> -->
+    <ion-row *ngFor='let layer of listPosition'>
+      <ion-col width-20 *ngFor="let pos of layer.data">
+        <div *ngIf="pos.customer != null">
+          <div class="btn-block" [ngClass]="{'green' : pos.pallet == 0 && pos.customer.cus_id ==  cusId,'gray' : pos.pallet == 0 && pos.customer.cus_id !=  cusId,'yellow' : pos.pallet != 0 || pos.isChangetoRS, 'blink' : pos.isBlink, 'bg-red' : (pos.isBlink && pos.customer.cus_id != cusId ) || (pos.isBlink && pos.pallet == 1), 'border-blue': pos.suggested}">
+            <p>{{pos.loc_alternative_name}}</p>
+            <p [hidden]="pos.pallet == 0">Cartons: {{pos.ctn_ttl}}</p>
+            <p [hidden]="(pos.pallet != 0) || (pos.isBlink && pos.pallet == 0 && isCarton)">EMPTY</p>
+            <p [hidden]="pos.pallet == 0">SKU: {{pos.sku}}</p>
+            <p [hidden]="!pos.isChangetoRS || pos.pallet == 0">Reserved</p>
+            <p [hidden]="!(pos.isBlink && pos.pallet == 0 && isCarton)">Cartons: {{pos.numCarton}}</p>
+          </div>
+        </div>
+        <div *ngIf="pos.customer == null">
+          <div class="btn-block" [ngClass]="{'yellow' : pos.pallet != 0 || pos.isChangetoRS,'gray' : pos.pallet == 0, 'blink' : pos.isBlink, 'bg-red' : pos.isBlink}">
+            <p>{{pos.loc_alternative_name}}</p>
+            <p [hidden]="pos.pallet == 0">Cartons: {{pos.ctn_ttl}}</p>
+            <p [hidden]="pos.pallet != 0">EMPTY</p>
+            <p [hidden]="!pos.isChangetoRS || pos.pallet == 0">Reserved</p>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-row *ngFor="let num of [1,2,3,4,5,6,7,8,9,10] | slice : 0 : totalRow">
+	                <ion-col width-20 *ngFor="let pos of listPosition | slice : (num-1)*5 : num*5 ">
+	                    <div class="btn-block" (click)="updateStatus(pos)" [ngClass]="{'green' : pos.last_status == 'Recommend' ,'gray' : pos.last_status == 'ET' || pos.last_status == '','yellow' : pos.last_status == 'RS', 'blink' : pos.isBlink}">
+	                        <p>{{pos.code}}</p>
+	                        <p>{{pos.display_status}}</p>
+	                    </div>
+	                </ion-col>
+	            </ion-row> -->
+    <!--  </ion-grid> -->
+  </div>
+</ion-content>

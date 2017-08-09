@@ -1,0 +1,104 @@
+<!--
+  Generated template for the AssignCartonsOrder page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title><strong>Assign Cartons to Order</strong></ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col width-25>
+        <ion-row>
+          <ion-col><strong class="label-grey">ORDER</strong></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col><strong class="label-grey">CARTONS</strong></ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col width-75>
+        <ion-row>
+          <ion-col width-50><strong>{{currentSku.odr_num}}</strong></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col width-50><strong>{{currentSku.total_ctns}} / {{assignedCarton}}</strong></ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- <button ion-button class="scan-btn" small [hidden]="isScanning" (click)="doScanRFID()">SCAN CARTON</button>
+    <button ion-button class="scan-btn" color="danger" small [hidden]="!isScanning" (click)="stopScanRFID(false)">STOP SCANNING</button> -->
+  <table class="table-striped root-table">
+    <thead>
+      <tr>
+        <th class="text-left">Carton RFID</th>
+        <th class="text-left">Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <ion-item>
+            <ion-input type="text" class="width-50" [(ngModel)]='rfIdRef'></ion-input>
+          </ion-item>
+        </td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr *ngFor="let rfid of tempListRFID" [hidden]="tempListRFID.length <= 0">
+        <td class="text-left">{{rfid.ctn_rfid}}</td>
+        <td [ngSwitch]="rfid.sts" class="text-left">
+          <span *ngSwitchCase="'AD'">Assigned</span>
+          <span *ngSwitchCase="'WR'" color="danger">Wrong SKU</span>
+        </td>
+        <td class="text-left"><span [hidden]="rfid.sts == 'AD'" color="danger" (click)="removeRFID(tempListRFID, rfid)">
+            <img src="assets/icon/ic_delete.png" alt="" class="icon-img-parent" height="24">
+        </span></td>
+      </tr>
+      <tr *ngFor="let rfid of listRFID" [hidden]="listRFID.length <= 0">
+        <td class="text-left">{{rfid.ctn_rfid}}</td>
+        <td class="text-left">
+          <span>Assigned</span>
+        </td>
+        <td></td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <!-- <ion-row [hidden]="!isFlagStatus">
+    <ion-col width-10>
+      <ion-row>
+        <ion-col width-100>Pieces:</ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col width-50>
+      <ion-row>
+        <ion-col width-40>
+          <ion-item>
+            <ion-input class="piece-number" type="text" [(ngModel)]='pieceNumber' autofocus></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col width-50>
+          <button ion-button item-right small (click)="getAsns()" [disabled]="!ctnrNumsBackUp || !cusNamesBackUp">Scan Pieces</button>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row> -->
+
+  <!-- <div class="btn-list-container">
+
+    <button ion-button small outline (click)="doPickPullCarton(currentSku.ord_dtl_id)">CONFIRM</button>
+
+    <button ion-button color="dark" outline icon-right small>
+                    Next Sku
+                    <ion-icon name="ios-arrow-forward"></ion-icon>
+                </button>
+
+  </div> -->
+</ion-content>
